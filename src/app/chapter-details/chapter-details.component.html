@@ -1,5 +1,14 @@
-<p>
-  chapter title: {{chapterTitle}}  
-</p>
+  <div class="container">
+    <p>
+      chapter title: {{chapterTitle}}  
+    </p>
 
-{{chapterObject|json}}
+    {{chapterObject|json}}
+    <div class="row">
+      <div class="col-md-6" style="height: 100vh;">
+        <app-status-box></app-status-box>
+        <app-chat></app-chat>
+      </div>
+      <app-terminal></app-terminal>
+    </div>
+  </div>

@@ -11,6 +11,11 @@ import { ChapterDetailsComponent } from './chapter-details/chapter-details.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { ChapterService } from './chapter.service';
+import { ChatService } from './chat.service';
+import { ChatComponent } from './chat/chat.component';
+import { StatusBoxComponent } from './status-box/status-box.component';
+import { TerminalComponent } from './terminal/terminal.component';
+import { ChatQuestionComponent } from './chat-question/chat-question.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: DashboardComponent },
@@ -28,7 +33,11 @@ const appRoutes: Routes = [
     ChapterItemComponent,
     ChapterDetailsComponent,
     DashboardComponent,
-    LoginComponent
+    LoginComponent,
+    ChatComponent,
+    StatusBoxComponent,
+    TerminalComponent,
+    ChatQuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +46,8 @@ const appRoutes: Routes = [
 //      { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [ChapterService],
+  providers: [ChapterService,
+    ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

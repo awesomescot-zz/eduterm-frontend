@@ -1,0 +1,22 @@
+.send_message {
+  border-radius: 50px;
+  background-color: #a3d063;
+  border: 2px solid #a3d063;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s linear;
+  text-align: center;
+  float: left;
+  padding: 10px;
+  margin: 5px;
+}
+.send_message:hover {
+  color: #a3d063;
+  background-color: #fff;
+}
+.send_message .text {
+  font-size: 18px;
+  font-weight: 300;
+  display: inline-block;
+  line-height: 48px;
+}

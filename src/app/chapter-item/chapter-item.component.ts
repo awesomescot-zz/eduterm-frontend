@@ -13,6 +13,7 @@ export class ChapterItemComponent implements OnInit {
 
   @Input() object:Chapter;
   @Output() onClick:EventEmitter<any> = new EventEmitter();
+  
   get title():string { return this.object ? this.object.title : "not exists"}
 
   constructor() { }
