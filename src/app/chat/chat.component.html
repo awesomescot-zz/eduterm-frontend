@@ -8,11 +8,10 @@
             <div class="title">Chat</div>
           </div>
           <ul class="messages">
-            <li *ngFor="let message of chat.messages" class="{{message.message_side}} message appeared">
-              <div class="text_wrapper text">{{message.text}}</div>
-            </li> 
+            <app-chat-message *ngFor="let message of chat.messages" [message]="message">
+            </app-chat-message> 
           </ul>
           <div class="bottom_wrapper clearfix">
-            <app-chat-question *ngFor="let question of chat.questions" [question]="question"></app-chat-question>
+            <app-chat-question *ngFor="let question of chat.questions" [question]="question" (onClick)="onQuestionClick($event)"></app-chat-question>
           </div>
         </div>

@@ -9,7 +9,8 @@ import {ChapterService} from '../chapter.service';
 })
 export class ChapterListComponent implements OnInit {
   chapters:Chapter[];
-  onChapterClick = (event):void => {console.log(event);
+  onChapterClick = (event):void => {
+    console.log(event);
   }
 
   constructor(private chapterService:ChapterService) { 

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule }   from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -16,6 +17,7 @@ import { ChatComponent } from './chat/chat.component';
 import { StatusBoxComponent } from './status-box/status-box.component';
 import { TerminalComponent } from './terminal/terminal.component';
 import { ChatQuestionComponent } from './chat-question/chat-question.component';
+import { ChatMessageComponent } from './chat-message/chat-message.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: DashboardComponent },
@@ -37,14 +39,16 @@ const appRoutes: Routes = [
     ChatComponent,
     StatusBoxComponent,
     TerminalComponent,
-    ChatQuestionComponent
+    ChatQuestionComponent,
+    ChatMessageComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(
       appRoutes
 //      { enableTracing: true } // <-- debugging purposes only
-    )
+    ),
+    FormsModule
   ],
   providers: [ChapterService,
     ChatService],

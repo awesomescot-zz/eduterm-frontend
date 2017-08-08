@@ -1,4 +1,5 @@
 export interface ChatQuestion{
   text:string;
-  question_index:number;
+  id:number;
+  visible:boolean;
 }

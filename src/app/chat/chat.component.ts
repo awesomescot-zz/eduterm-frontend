@@ -9,6 +9,10 @@ import { ChatService } from '../chat.service';
 })
 export class ChatComponent implements OnInit {
 
+  onQuestionClick(event){
+    this.chat.questionClicked(event);
+  }
+
   constructor(private chat:ChatService) { }
 
   ngOnInit() {

@@ -8,10 +8,10 @@ import { ChatQuestion } from '../models/chat-question';
 })
 export class ChatQuestionComponent implements OnInit {
   @Input() question:ChatQuestion;
- 
-  onClick(){
-    console.log(this.question.question_index);
-  }
+  @Output() onClick = new EventEmitter(); 
+  //onClick(){
+    //console.log(this.question.question_index);
+  //}
 
   constructor() { }
 

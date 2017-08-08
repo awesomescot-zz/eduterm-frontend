@@ -6,10 +6,16 @@ import { ChatQuestion } from './models/chat-question';
 export class ChatService {
   messages: ChatMessage[] = [{text: 'hello', message_side: 'right'},
     {text: 'no more room!!', message_side: 'left'}];
-  questions: ChatQuestion[] = [{text: "what is next?", question_index: 0}, 
-    {text: "Another question!", question_index: 1}];
+  questions: ChatQuestion[] = [{text: "what is next?", id: 0, visible: true}, 
+    {text: "Another question!", id: 1, visible: true}];
  
-
+  questionClicked(question:ChatQuestion){
+    this.messages.push({text:question.text, message_side: 'left'});
+    this.questions = this.questions.map(q => 
+      q.id === question.id
+        ? {text:q.text, id:q.id, visible: false}
+        : q);
+  }
 
   constructor() { 
   }

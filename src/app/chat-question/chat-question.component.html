@@ -1,1 +1,1 @@
-<div class="question{{question.question_index}} send_message text" (click)="onClick()">{{question.text}}</div>
+<div *ngIf="question.visible" class="question{{question.question_index}} send_message text" (click)="onClick.emit(question)">{{question.text}}</div>
