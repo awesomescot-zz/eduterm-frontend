@@ -18,5 +18,5 @@
   <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">Login</button>
 </form>
 <a [routerLink]="['/signup']">Create account</a>
-
-
+<button (click)="authService.logOut()" *ngIf="authService.loggedIn()">Log out</button>
+</div>

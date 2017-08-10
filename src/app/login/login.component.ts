@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../models/user';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [AuthService]
 })
 export class LoginComponent implements OnInit {
   model:User = { username:'',
@@ -13,8 +15,9 @@ export class LoginComponent implements OnInit {
   };
   onSubmit(){
     console.log(this.model);
+    this.authService.login(this.model);
   }
-  constructor() { }
+  constructor(private authService:AuthService) { }
 
   ngOnInit() {
   }

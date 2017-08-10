@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { Headers, Http, Response, HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -13,6 +15,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { ChapterService } from './chapter.service';
 import { ChatService } from './chat.service';
+import { AuthService } from './auth.service';
 import { ChatComponent } from './chat/chat.component';
 import { StatusBoxComponent } from './status-box/status-box.component';
 import { TerminalComponent } from './terminal/terminal.component';
@@ -48,10 +51,14 @@ const appRoutes: Routes = [
       appRoutes
 //      { enableTracing: true } // <-- debugging purposes only
     ),
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    HttpModule
   ],
   providers: [ChapterService,
-    ChatService],
+    ChatService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
