@@ -21,11 +21,12 @@ import { StatusBoxComponent } from './status-box/status-box.component';
 import { TerminalComponent } from './terminal/terminal.component';
 import { ChatQuestionComponent } from './chat-question/chat-question.component';
 import { ChatMessageComponent } from './chat-message/chat-message.component';
+import { SignupComponent } from './signup/signup.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: DashboardComponent },
   { path: 'login', component: LoginComponent },
-//  { path: 'signup', component: HeroListComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'chapters/:title', component: ChapterDetailsComponent},
   { path: '**', component: AppComponent }
 ];
@@ -43,7 +44,8 @@ const appRoutes: Routes = [
     StatusBoxComponent,
     TerminalComponent,
     ChatQuestionComponent,
-    ChatMessageComponent
+    ChatMessageComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
