@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Headers, Http, Response, HttpModule } from '@angular/http';
+import { AuthModule } from './auth.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -16,6 +17,7 @@ import { LoginComponent } from './login/login.component';
 import { ChapterService } from './chapter.service';
 import { ChatService } from './chat.service';
 import { AuthService } from './auth.service';
+import { AuthGuardService } from './auth-guard.service';
 import { ChatComponent } from './chat/chat.component';
 import { StatusBoxComponent } from './status-box/status-box.component';
 import { TerminalComponent } from './terminal/terminal.component';
@@ -24,11 +26,11 @@ import { ChatMessageComponent } from './chat-message/chat-message.component';
 import { SignupComponent } from './signup/signup.component';
 
 const appRoutes: Routes = [
-  { path: 'home', component: DashboardComponent },
+  { path: 'home', component: DashboardComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'chapters/:title', component: ChapterDetailsComponent},
-  { path: '**', component: AppComponent }
+  { path: 'chapters/:title', component: ChapterDetailsComponent, canActivate: [AuthGuardService]},
+  { path: '**', component: AppComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({
@@ -55,11 +57,13 @@ const appRoutes: Routes = [
     ),
     FormsModule,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    AuthModule
   ],
   providers: [ChapterService,
     ChatService,
-    AuthService
+    AuthService,
+    AuthGuardService,
   ],
   bootstrap: [AppComponent]
 })

@@ -13,12 +13,14 @@ export class ChapterListComponent implements OnInit {
     console.log(event);
   }
 
+
+
   constructor(private chapterService:ChapterService) {
 
   }
 
   ngOnInit() {
-    this.chapterService.populateChapters((data) => this.chapters = data);
+    this.chapterService.populateChapters().subscribe(data => this.chapters = data);
   }
 
 }
