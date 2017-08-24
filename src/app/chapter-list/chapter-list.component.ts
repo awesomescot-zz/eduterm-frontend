@@ -20,7 +20,10 @@ export class ChapterListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.chapterService.populateChapters().subscribe(data => this.chapters = data);
+    this.chapterService.populateChapters().subscribe(
+      data => this.chapters = data, 
+      error => console.log(error)
+    );
   }
 
 }

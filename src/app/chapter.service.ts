@@ -4,8 +4,8 @@ import { Http, Response, HttpModule, Headers, RequestOptions } from '@angular/ht
 import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { AuthHttp } from 'angular2-jwt';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch'
+//import 'rxjs/add/operator/map';
+//import 'rxjs/add/operator/catch'
 import { Observable } from 'rxjs/Rx';
 
 @Injectable()
