@@ -16,12 +16,11 @@ export class ChapterDetailsComponent implements OnInit {
                 private chapterService: ChapterService ) { }
 
   ngOnInit() {
-  	console.log("chapter-details ngOnInit");
   	this._route.params.subscribe(params => {
   		console.log(params);
   		this.chapterTitle = params.title;
+      this.chapterService.setChapter(params.title);
       this.chapterObject = this.chapterService.getChapter(this.chapterTitle);
-      
   	});
   }
 

@@ -11,15 +11,22 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class ChapterService {
 
-  data:Chapter[] = [];
+  chapters:Chapter[] = [];
+  currentChapter:string;
 
   constructor(private authHttp:AuthHttp, private authService:AuthService) {
 
   }
 
   getChapter(title:string):Chapter {
-  	return this.data.find(x => x.title === title)
+  	return this.chapters.find(x => x.title === title)
   }
+
+
+  setChapter(chapter:string){
+    this.currentChapter = chapter;
+  }
+
 
   populateChapters(){
     // let headers = new Headers();
@@ -37,7 +44,7 @@ export class ChapterService {
     return this.authHttp.get("http://localhost:8000/api/chapters")
       .map(res => res.json())
       .map(
-        data => this.data = data.map(chapter => {
+        data => this.chapters = data.map(chapter => {
           return {title: chapter, enabled: this.authService.getUser().available_chapters.includes(chapter)}
         })
       ).catch((error:any) => Observable.throw(error));

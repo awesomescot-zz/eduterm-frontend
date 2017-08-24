@@ -16,8 +16,9 @@ export class ChatComponent implements OnInit {
   constructor(private chat:ChatService) { }
 
   ngOnInit() {
-
+    this.chat.getNextChat(); 
     //this.chat.sendMessage('hello','right');
+    setInterval(() => this.chat.getStatus(), 10000);
   }
 
 }
