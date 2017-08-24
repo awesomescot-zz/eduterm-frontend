@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import '../../assets/temp.js';
+
+declare var MyObj:any;
 
 @Component({
   selector: 'app-terminal',
@@ -7,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TerminalComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    console.log("got here!");
+    console.log(MyObj);
+  }
 
   ngOnInit() {
   }
