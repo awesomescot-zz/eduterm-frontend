@@ -40,7 +40,7 @@ export class AuthService {
   getToken(){
     return localStorage.getItem('token');
   }
-  getUser(){
+  getUser():User{
     return this.jwtHelper.decodeToken(this.getToken()).user;
   }
 

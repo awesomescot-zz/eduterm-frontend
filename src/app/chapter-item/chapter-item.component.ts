@@ -11,10 +11,11 @@ import {Chapter} from '../models/chapter';
 
 export class ChapterItemComponent implements OnInit {
 
-  @Input() object:Chapter;
+  @Input() chapter:Chapter;
   @Output() onClick:EventEmitter<any> = new EventEmitter();
   
-  get title():string { return this.object ? this.object.title : "not exists"}
+  get title():string { return this.chapter ? this.chapter.title : "not exists"}
+  get enabled():boolean { return this.chapter ? this.chapter.enabled : false }
 
   constructor() { }
 
