@@ -7,11 +7,12 @@
             </div>
             <div class="title">Chat</div>
           </div>
-          <ul class="messages">
+          <ul class="messages" #domMessages id="messages">
             <app-chat-message *ngFor="let message of chat.messages" [message]="message">
             </app-chat-message> 
           </ul>
           <div class="bottom_wrapper clearfix">
             <app-chat-question *ngFor="let question of chat.questions" [question]="question" (onClick)="onQuestionClick($event)"></app-chat-question>
           </div>
+
         </div>

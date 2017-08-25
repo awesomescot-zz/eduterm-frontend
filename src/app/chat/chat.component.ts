@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ChatService } from '../chat.service';
+import { Observable, Subject, ReplaySubject } from 'rxjs/Rx';
+import { ChatMessage } from '../models/chat-message';
 
 
 @Component({
@@ -8,6 +10,7 @@ import { ChatService } from '../chat.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+  //@ViewChild('domMessages')domMessages: ElementRef;
 
   onQuestionClick(event){
     this.chat.questionClicked(event);
@@ -16,9 +19,22 @@ export class ChatComponent implements OnInit {
   constructor(private chat:ChatService) { }
 
   ngOnInit() {
-    this.chat.getNextChat(); 
-    //this.chat.sendMessage('hello','right');
-    setInterval(() => this.chat.getStatus(), 10000);
+    this.chat.getNextChat().subscribe(
+      data => {},
+      error => console.log(error)
+    );
+    setInterval(() => {
+      this.chat.getStatus().subscribe();
+    }, 2000);
   }
+
+
+/*  scrollMessagesToBottom(){
+    let $messages = this.domMessages.nativeElement;
+    console.log(`Scrolling to bottom: ${$messages.scrollHeight}`);
+    $messages.scrollTop = $messages.scrollHeight;
+  }*/
+
+
 
 }

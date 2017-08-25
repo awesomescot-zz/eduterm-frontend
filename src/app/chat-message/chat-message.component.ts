@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { ChatMessage } from '../models/chat-message';
 
 @Component({
@@ -12,6 +12,10 @@ export class ChatMessageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+  ngAfterViewInit(){
+    let $messages = document.getElementById("messages");
+    $messages.scrollTop = $messages.scrollHeight;
   }
 
 }

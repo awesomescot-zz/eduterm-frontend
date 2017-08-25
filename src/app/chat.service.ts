@@ -3,14 +3,22 @@ import { ChatMessage } from './models/chat-message';
 import { ChatQuestion } from './models/chat-question';
 import { AuthHttp } from 'angular2-jwt';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch'
-import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/catch';
+import { Observable, Subject } from 'rxjs/Rx';
 import { ChapterService } from './chapter.service';
 
 @Injectable()
 export class ChatService {
-  messages: ChatMessage[] = [];// = [{text: 'hello', message_side: 'right'},
-    //{text: 'no more room!!', message_side: 'left'}];
+  messages: ChatMessage[] = [];
+  messages$: Subject<ChatMessage> = new Subject();
+  // = [{text: 'hello', message_side: 'right'},
+  //{text: 'no more room!!', message_side: 'left'}];
+  getMessages(): Observable<ChatMessage>{
+    return this.messages$.asObservable();
+  }
+  subscriber = this.getMessages().subscribe(data => {
+    this.messages.push(data);
+  });
   questions: ChatQuestion[];// = [{text: "what is next?", id: 0, visible: true},
   //  {text: "Another question!", id: 1, visible: true}];
   step: number = 0;
@@ -28,18 +36,17 @@ export class ChatService {
   }
 
   getNextChat(){
-    console.log(`current chapter is: ${this.chapterService.currentChapter}`);
-    this.authHttp.get(`http://localhost:8000/${this.chapterService.currentChapter}/api/chat/${this.step}`)
+    return this.authHttp.get(`http://localhost:8000/${this.chapterService.currentChapter}/api/chat/${this.step}`)
       .map(res => res.json())
-      .subscribe(
+      .map(
         data => {
-          console.log(data);
-          this.messages.push({text:data.chat, message_side: 'left'});
+          //this.messages.push({text:data.chat, message_side: 'left'});
+          this.messages$.next({text:data.chat, message_side: 'left'});
           this.questions = data.questions.map( (question, index) => {
             return { text: question, id: index, visible: true }
           });
         }
-      );
+      ).catch((error:any) => Observable.throw(error));
   }
 
   getQuestionAnswer(questionId:number){
@@ -47,24 +54,23 @@ export class ChatService {
       .map(res => res.json())
       .subscribe(
         data => {
-          console.log(data);
-          this.messages.push({text:data.chat, message_side: 'left'});
+          //this.messages.push({text:data.chat, message_side: 'left'});
+          this.messages$.next({text:data.chat, message_side: 'left'});
         }
       );
   }
 
   getStatus(){
-    this.authHttp.get(`http://localhost:8000/${this.chapterService.currentChapter}/api/status/${this.step}`)
+    return this.authHttp.get(`http://localhost:8000/${this.chapterService.currentChapter}/api/status/${this.step}`)
       .map(res => res.json())
-      .subscribe(
+      .map(
         data => {
-          console.log(data);
           if(data.status){
             this.step++;
-            this.getNextChat();
+            this.getNextChat().subscribe();
           }
         }
-      );
+      ).catch((error:any) => Observable.throw(error));
   }
 
   // sendMessage(text:string, message_side:string) {
