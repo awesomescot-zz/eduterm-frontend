@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-status-box',
   templateUrl: './status-box.component.html',
   styleUrls: ['./status-box.component.css']
 })
-export class StatusBoxComponent implements OnInit {
 
-  constructor() { }
+export class StatusBoxComponent implements OnInit, OnChanges {
+  @Input() statusHtml: string;
 
-  ngOnInit() {
+  sanitizedHtml: SafeHtml;
+
+  constructor(private sanitizer: DomSanitizer) {}
+
+  ngOnInit() {}
+
+  get _sanitizedHtml(): SafeHtml{
+    return this.sanitizer.bypassSecurityTrustHtml(this.statusHtml);
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    console.log(changes);
+    this.sanitizedHtml = this.sanitizer.bypassSecurityTrustHtml(changes.statusHtml.currentValue);
   }
 
 }

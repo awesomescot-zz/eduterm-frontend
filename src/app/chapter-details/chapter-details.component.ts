@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute }       from '@angular/router';
 import { ChapterService } from '../chapter.service';
 import { Chapter } from '../models/chapter';
+import { AuthService } from '../auth.service';
+
+declare var $:any;
+declare var jQuery:any;
 
 @Component({
   selector: 'app-chapter-details',
@@ -11,9 +15,12 @@ import { Chapter } from '../models/chapter';
 export class ChapterDetailsComponent implements OnInit {
   chapterTitle:string;
   chapterObject: Chapter;
+  statusHtml: string = '';
+
   constructor(  private _router: Router,
                 private _route: ActivatedRoute,
-                private chapterService: ChapterService ) { }
+                private chapterService: ChapterService ,
+                private authService: AuthService) { }
 
   ngOnInit() {
   	this._route.params.subscribe(params => {
@@ -23,5 +30,17 @@ export class ChapterDetailsComponent implements OnInit {
       this.chapterObject = this.chapterService.getChapter(this.chapterTitle);
   	});
   }
+  ngAfterViewInit(){
+    this.chapterService.getChapterSpecificJavascript().subscribe(
+      data => {
+        console.log(`internal script: ${this.authService}`);
+        let self = this;
+        //eval('console.log(me.authService);');
+        eval(data.code);
+      },
+      error => {}
+    );
+  }
+
 
 }

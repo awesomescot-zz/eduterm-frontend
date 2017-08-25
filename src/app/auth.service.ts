@@ -3,6 +3,8 @@ import { Headers, Http, Response, HttpModule } from '@angular/http';
 import { User } from './models/user';
 import { Router } from '@angular/router';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { AuthHttp } from 'angular2-jwt';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class AuthService {
@@ -44,7 +46,12 @@ export class AuthService {
     return this.jwtHelper.decodeToken(this.getToken()).user;
   }
 
-  constructor(private http:Http, private router:Router) {
+  constructor(private http:Http, private router:Router, private authHttp:AuthHttp) {
+  }
+  makeAuthGetRequest(url:string){
+    return this.authHttp.get(url)
+      .map(res => res.json())
+      .catch(error => Observable.throw(error));
   }
 
 

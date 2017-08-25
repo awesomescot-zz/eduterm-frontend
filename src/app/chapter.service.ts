@@ -49,5 +49,10 @@ export class ChapterService {
         })
       ).catch((error:any) => Observable.throw(error));
   }
+  getChapterSpecificJavascript(){
+    return this.authHttp.get(`http://localhost:8000/${this.currentChapter}/api/chapter_frontend.js`)
+      .map(res => res.json())
+      .catch(error => Observable.throw(error));
+  }
 
 }
