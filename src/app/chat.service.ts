@@ -11,37 +11,48 @@ import { ChapterService } from './chapter.service';
 export class ChatService {
   messages: ChatMessage[] = [];
   messages$: Subject<ChatMessage> = new Subject();
-  // = [{text: 'hello', message_side: 'right'},
-  //{text: 'no more room!!', message_side: 'left'}];
+
   getMessages(): Observable<ChatMessage>{
     return this.messages$.asObservable();
   }
   subscriber = this.getMessages().subscribe(data => {
     this.messages.push(data);
   });
-  questions: ChatQuestion[];// = [{text: "what is next?", id: 0, visible: true},
-  //  {text: "Another question!", id: 1, visible: true}];
+  questions: ChatQuestion[];
   step: number = 0;
+  correctQuestion: number = -1;
 
   questionClicked(question:ChatQuestion){
+    // add message for the question pressed
     this.messages.push({text:question.text, message_side: 'right'});
+    // remove question from array
     this.questions = this.questions.map(q =>
       q.id === question.id
         ? {text:q.text, id:q.id, visible: false}
         : q);
-    this.getQuestionAnswer(question.id);
+    // if correct question move to next step
+    console.log(`question.id = ${question.id} and correctQuestion = ${this.correctQuestion}`);
+    if (question.id === this.correctQuestion){
+      this.step++;
+      this.getNextChat().subscribe();
+    } else {
+      // get answer to question
+      this.getQuestionAnswer(question.id);
+    }
   }
 
   constructor(private authHttp:AuthHttp, private chapterService:ChapterService) {
   }
 
   getNextChat(){
+    console.log(`get next chat.  step: ${this.step}`);
     return this.authHttp.get(`http://localhost:8000/${this.chapterService.currentChapter}/api/chat/${this.step}`)
       .map(res => res.json())
       .map(
         data => {
           //this.messages.push({text:data.chat, message_side: 'left'});
           this.messages$.next({text:data.chat, message_side: 'left'});
+          this.correctQuestion = data.correct_question;
           this.questions = data.questions.map( (question, index) => {
             return { text: question, id: index, visible: true }
           });
@@ -61,6 +72,7 @@ export class ChatService {
   }
 
   getStatus(){
+    console.log("getStatus() step: " + this.step);
     return this.authHttp.get(`http://localhost:8000/${this.chapterService.currentChapter}/api/status/${this.step}`)
       .map(res => res.json())
       .map(

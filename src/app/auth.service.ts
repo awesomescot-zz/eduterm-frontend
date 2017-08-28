@@ -10,6 +10,8 @@ import { Observable } from 'rxjs/Rx';
 export class AuthService {
   jwtHelper: JwtHelper = new JwtHelper();
 
+  constructor(private http:Http, private router:Router, private authHttp:AuthHttp) {
+  }
   signup(user:User){
     this.http.post("http://localhost:8000/api/register", user)
       .subscribe(data => {
@@ -46,12 +48,17 @@ export class AuthService {
     return this.jwtHelper.decodeToken(this.getToken()).user;
   }
 
-  constructor(private http:Http, private router:Router, private authHttp:AuthHttp) {
-  }
   makeAuthGetRequest(url:string){
     return this.authHttp.get(url)
       .map(res => res.json())
       .catch(error => Observable.throw(error));
+  }
+  getNewJwt(){
+    return this.authHttp.get("http://localhost:8000/api/genJwt")
+      .map(res => res.json())
+      .map(res => {
+        localStorage.setItem('token',res.token);
+      }).catch(error => Observable.throw(error));
   }
 
 

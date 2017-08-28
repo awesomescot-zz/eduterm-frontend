@@ -21,7 +21,6 @@ export class StatusBoxComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges){
-    console.log(changes);
     this.sanitizedHtml = this.sanitizer.bypassSecurityTrustHtml(changes.statusHtml.currentValue);
   }
 

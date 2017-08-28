@@ -1,8 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, NgZone } from '@angular/core';
 import { Router, ActivatedRoute }       from '@angular/router';
 import { ChapterService } from '../chapter.service';
 import { Chapter } from '../models/chapter';
 import { AuthService } from '../auth.service';
+import { ChatService } from '../chat.service';
 
 declare var $:any;
 declare var jQuery:any;
@@ -20,26 +21,49 @@ export class ChapterDetailsComponent implements OnInit {
   constructor(  private _router: Router,
                 private _route: ActivatedRoute,
                 private chapterService: ChapterService ,
-                private authService: AuthService) { }
+                private authService: AuthService,
+                private zone:NgZone,
+                private chatService:ChatService) { 
+    (<any>window).angularComponentRef = {
+      zone: this.zone, 
+      completeChapter: () => this.completedChapter(), 
+      component: this
+    };
+  }
 
   ngOnInit() {
   	this._route.params.subscribe(params => {
-  		console.log(params);
   		this.chapterTitle = params.title;
       this.chapterService.setChapter(params.title);
       this.chapterObject = this.chapterService.getChapter(this.chapterTitle);
+      this.chatService.step = 0;
+      this.chatService.messages = [];
+      console.log("chapter-details OnInit");
   	});
   }
   ngAfterViewInit(){
     this.chapterService.getChapterSpecificJavascript().subscribe(
       data => {
-        console.log(`internal script: ${this.authService}`);
         let self = this;
         //eval('console.log(me.authService);');
         eval(data.code);
       },
       error => {}
     );
+  }
+  completedChapter(){
+    this.chapterService.completeChapter().subscribe(data =>
+      {
+        jQuery("#completeModal").modal();
+      }
+    );
+  }
+  nextChapterLink(){
+    let nextChapter = this.chapterService.getNextChapter();
+    this._router.navigateByUrl(`/chapters/${nextChapter.title}`);
+  }
+  homeLink(){
+    this._router.navigateByUrl("/home");
   }
 
 

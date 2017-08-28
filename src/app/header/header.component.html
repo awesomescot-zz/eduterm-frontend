@@ -23,5 +23,8 @@
     <span class="navbar-text" *ngIf="authService.loggedIn()">
       Welcome {{authService.getUser().username}}
     </span>
+    <span class="navbar-text" *ngIf="chapterService.currentChapter">
+      Chapter {{chapterService.currentChapter}}
+    </span>
   </div>
 </nav>

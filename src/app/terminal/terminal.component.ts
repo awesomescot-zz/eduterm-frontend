@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import * as io from 'socket.io-client';
 import { AuthService } from '../auth.service';
+import { ChapterService } from '../chapter.service';
 
 declare var lib:any;
 declare var hterm:any;
@@ -12,7 +13,8 @@ declare var hterm:any;
 })
 export class TerminalComponent implements OnInit, AfterViewInit {
   //@ViewChild('terminal') domTerm;
-  constructor(private authService:AuthService) {
+  constructor(private authService:AuthService,
+              private chapterService:ChapterService) {
 
   }
 
@@ -22,7 +24,7 @@ export class TerminalComponent implements OnInit, AfterViewInit {
     console.log(lib);
     //console.log(this.domTerm);
     var socket = io.connect('http://localhost:8000/', {
-      path: '/quest1/wetty/socket.io',
+      path: `/${this.chapterService.currentChapter}/wetty/socket.io`,
       query: 'token=' + this.authService.getToken()
     });
 
