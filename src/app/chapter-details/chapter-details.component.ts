@@ -61,9 +61,11 @@ export class ChapterDetailsComponent implements OnInit {
   nextChapterLink(){
     let nextChapter = this.chapterService.getNextChapter();
     this._router.navigateByUrl(`/chapters/${nextChapter.title}`);
+    window.location.reload();
   }
   homeLink(){
     this._router.navigateByUrl("/home");
+    window.location.reload();
   }
 
 

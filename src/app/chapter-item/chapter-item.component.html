@@ -1,4 +1,4 @@
-<a *ngIf="enabled" [routerLink]="['/chapters', title]" class="dropdown-item">{{title}}</a>
+<a *ngIf="enabled" href="/chapters/{{title}}" class="dropdown-item">{{title}}</a>
 <a *ngIf="!enabled" class="dropdown-item disabled">{{title}}</a>
 
 <!-- <button (click)="onClick.emit(object.title)">hello</button> -->
