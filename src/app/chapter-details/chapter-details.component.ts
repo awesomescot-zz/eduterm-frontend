@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, NgZone } from '@angular/core';
+import { Component, OnInit, AfterViewInit, NgZone, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute }       from '@angular/router';
 import { ChapterService } from '../chapter.service';
 import { Chapter } from '../models/chapter';
@@ -13,10 +13,11 @@ declare var jQuery:any;
   templateUrl: './chapter-details.component.html',
   styleUrls: ['./chapter-details.component.css']
 })
-export class ChapterDetailsComponent implements OnInit {
+export class ChapterDetailsComponent implements OnInit, OnDestroy {
   chapterTitle:string;
   chapterObject: Chapter;
   statusHtml: string = '';
+  clearAllIntervals = () => {}
 
   constructor(  private _router: Router,
                 private _route: ActivatedRoute,
@@ -31,21 +32,27 @@ export class ChapterDetailsComponent implements OnInit {
     };
   }
 
+  ngOnDestroy(){
+  }
+
   ngOnInit() {
+    console.log("chapter-details OnInit");
   	this._route.params.subscribe(params => {
   		this.chapterTitle = params.title;
       this.chapterService.setChapter(params.title);
       this.chapterObject = this.chapterService.getChapter(this.chapterTitle);
       this.chatService.step = 0;
       this.chatService.messages = [];
-      console.log("chapter-details OnInit");
+      if(this.clearAllIntervals != null){
+        this.clearAllIntervals();
+      }
+      console.log("route change");
   	});
   }
   ngAfterViewInit(){
     this.chapterService.getChapterSpecificJavascript().subscribe(
       data => {
         let self = this;
-        //eval('console.log(me.authService);');
         eval(data.code);
       },
       error => {}
