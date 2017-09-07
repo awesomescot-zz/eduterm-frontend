@@ -8,7 +8,7 @@
             <div class="title">Chat</div>
           </div>
           <ul class="messages" #domMessages id="messages">
-            <app-chat-message *ngFor="let message of chat.messages" [message]="message">
+            <app-chat-message *ngFor="let message of chat.messages" [message]="message" [@messageState]="message.state">
             </app-chat-message> 
           </ul>
           <div class="bottom_wrapper clearfix">

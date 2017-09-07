@@ -24,6 +24,7 @@ import { TerminalComponent } from './terminal/terminal.component';
 import { ChatQuestionComponent } from './chat-question/chat-question.component';
 import { ChatMessageComponent } from './chat-message/chat-message.component';
 import { SignupComponent } from './signup/signup.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
   { path: 'home', component: DashboardComponent, canActivate: [AuthGuardService] },
@@ -58,7 +59,8 @@ const appRoutes: Routes = [
     FormsModule,
     HttpClientModule,
     HttpModule,
-    AuthModule
+    AuthModule,
+    BrowserAnimationsModule
   ],
   providers: [ChapterService,
     ChatService,
